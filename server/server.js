@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import productRoutes from './routes/products.js';
 import dashboardRoutes from './routes/dashboard.js';
+import path from 'path';
 
 dotenv.config();
 
@@ -40,7 +41,11 @@ app.get('/api/health', (req, res) => {
   res.status(200).send('API is healthy');
   console.log('Health check endpoint hit');
 });
+app.use(express.static(path.join(__dirname, 'build')));
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
