@@ -36,6 +36,10 @@ db.once('open', () => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.get('/api/health', (req, res) => {
+  res.status(200).send('API is healthy');
+  console.log('Health check endpoint hit');
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
