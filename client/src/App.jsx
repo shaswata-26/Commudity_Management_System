@@ -16,7 +16,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen bg-white text-white dark:bg-gray-900 transition-colors">
+          <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white transition-colors">
             <Toaster position="top-right" />
             <Routes>
               <Route path="/login" element={<Login />} />
