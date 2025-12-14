@@ -9,6 +9,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename);
+
 dotenv.config();
 
 const app = express();
@@ -44,6 +45,8 @@ app.get('/api/health', (req, res) => {
   console.log('Health check endpoint hit');
 });
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/src', express.static(path.join(__dirname, 'src')));
+
 
 app.get( (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
