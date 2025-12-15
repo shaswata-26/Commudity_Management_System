@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(user));
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setUser(user);
+      console.log('User logged in:', user);
       
       toast.success('Login successful!');
       return { success: true, user };
