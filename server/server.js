@@ -8,10 +8,10 @@ import dashboardRoutes from './routes/dashboard.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -31,19 +31,22 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+// Health check
 app.get('/api/health', (req, res) => {
   res.status(200).send('API is healthy');
 });
 
-// Static files (React / Vite build)
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.use(express.static(path.join(__dirname, '../client/public')));
+// Serve React static files
+const clientDistPath = path.join(__dirname, '../client/dist');
+app.use(express.static(clientDistPath));
 
-// ✅ SPA fallback (IMPORTANT)
-app.get( (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+// SPA fallback — must be LAST route
+app.get(
+   (req, res) => {
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
+// Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
